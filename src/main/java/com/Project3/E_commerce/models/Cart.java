@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Category {
+public class Cart {
     private Long id;
-    private String name;
+    private User user;
 }
