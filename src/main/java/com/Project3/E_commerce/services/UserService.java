@@ -38,12 +38,11 @@ public class UserService {
 
 
     private TokenService tokenService;
-    private final JavaMailSender mailSender;
     private final VerificationTokenRepository verificationTokenRepository;
     @Value("${sender.email}")
     private String senderEmail;
 
-    public UserService(JavaMailSender mailSender, VerificationTokenRepository verificationTokenRepository, TokenService tokenService, RoleRepository roleRepository, UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder,
+    public UserService( VerificationTokenRepository verificationTokenRepository, TokenService tokenService, RoleRepository roleRepository, UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder,
                        JWTUtils jwtUtils, @Lazy AuthenticationManager authenticationManager, @Lazy MyUserDetails myUserDetails, JavaMailSender mailSender1, VerificationTokenRepository verificationTokenRepository1){
         this.userRepository=userRepository;
         this.passwordEncoder=passwordEncoder;
@@ -52,8 +51,12 @@ public class UserService {
         this.myUserDetails=myUserDetails;
         this.roleRepository=roleRepository;
         this.tokenService=tokenService;
-        this.mailSender = mailSender;
         this.verificationTokenRepository=verificationTokenRepository;
+    }
+
+
+    public User findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 
     public User createUser(User objectUser){

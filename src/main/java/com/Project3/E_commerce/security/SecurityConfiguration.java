@@ -32,7 +32,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/auth/users/register",
-                                "/auth/users/login"
+                                "/auth/users/login",
+                                "/api/auth/verify"
                         ).permitAll()
                         .anyRequest().authenticated()
                 );

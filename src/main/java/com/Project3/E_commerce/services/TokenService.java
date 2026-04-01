@@ -1,8 +1,5 @@
 package com.Project3.E_commerce.services;
 
-
-
-
 import com.Project3.E_commerce.exceptions.InformationNotFoundException;
 import com.Project3.E_commerce.models.User;
 import com.Project3.E_commerce.models.VerificationToken;
@@ -18,9 +15,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-
 @Service
 public class TokenService {
+
 
     private final JavaMailSender mailSender;
     private final UserRepository userRepository;
@@ -31,7 +28,7 @@ public class TokenService {
     @Value("${sender.email}")
     private String senderEmail;
 
-    public TokenService(VerificationTokenRepository verificationTokenRepository, JavaMailSender mailSender, UserRepository userRepository) {
+    public TokenService(VerificationTokenRepository verificationTokenRepository,JavaMailSender mailSender, UserRepository userRepository) {
         this.mailSender = mailSender;
         this.userRepository = userRepository;
         this.verificationTokenRepository=verificationTokenRepository;
