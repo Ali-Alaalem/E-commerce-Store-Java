@@ -1,7 +1,8 @@
 package com.Project3.E_commerce.security;
 
-import com.todoApp.models.User;
-import com.todoApp.services.UserService;
+
+import com.Project3.E_commerce.models.User;
+import com.Project3.E_commerce.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

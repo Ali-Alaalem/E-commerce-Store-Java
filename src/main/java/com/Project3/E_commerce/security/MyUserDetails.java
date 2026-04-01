@@ -1,7 +1,7 @@
 package com.Project3.E_commerce.security;
 
 
-import com.todoApp.models.User;
+import com.Project3.E_commerce.models.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
