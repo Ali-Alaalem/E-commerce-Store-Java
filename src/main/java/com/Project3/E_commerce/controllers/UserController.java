@@ -3,9 +3,11 @@ package com.Project3.E_commerce.controllers;
 
 import com.Project3.E_commerce.models.User;
 import com.Project3.E_commerce.models.request.LoginRequest;
+import com.Project3.E_commerce.models.request.PasswordChangeRequest;
 import com.Project3.E_commerce.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -49,4 +51,11 @@ private UserService userService;
         userService.resetPassword(token, newPassword);
         return ResponseEntity.ok("<h3>Password reset successfully!</h3>");
     }
+
+    @PutMapping("/change/password")
+    public String ChangePassword(Authentication authentication, @RequestBody PasswordChangeRequest request){
+        System.out.println("Controller calling ==> ChangePassword()");
+        return userService.ChangePassword(authentication,request);
+    }
+
 }

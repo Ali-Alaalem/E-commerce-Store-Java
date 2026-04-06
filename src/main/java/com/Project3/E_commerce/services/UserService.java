@@ -6,6 +6,7 @@ import com.Project3.E_commerce.models.Role;
 import com.Project3.E_commerce.models.User;
 import com.Project3.E_commerce.models.VerificationToken;
 import com.Project3.E_commerce.models.request.LoginRequest;
+import com.Project3.E_commerce.models.request.PasswordChangeRequest;
 import com.Project3.E_commerce.models.response.LoginResponse;
 import com.Project3.E_commerce.repositorys.RoleRepository;
 import com.Project3.E_commerce.repositorys.UserRepository;
@@ -221,6 +222,21 @@ objectUser.setPassword(passwordEncoder.encode(objectUser.getPassword()));
             userRepository.save(user);
             verificationTokenRepository.delete(userToken.get());
         }
+    }
+
+
+    public String ChangePassword(Authentication authentication, PasswordChangeRequest request) {
+        String currentLoggedUserEmail = authentication.getName();
+        User userLoggedIn=userRepository.findUserByEmail(currentLoggedUserEmail);
+
+        if( passwordEncoder.matches(request.getCurrentPassword(),userLoggedIn.getPassword())){
+            userLoggedIn.setPassword(passwordEncoder.encode(request.getNewPassword()));
+            userRepository.save(userLoggedIn);
+            return "User password has been changed successfully";
+        }else {
+            throw new InformationExistException("The Current password is wrong");
+        }
+
     }
 
 }
