@@ -33,7 +33,10 @@ public class SecurityConfiguration {
                         .requestMatchers(
                                 "/auth/users/register",
                                 "/auth/users/login",
-                                "/api/auth/verify"
+                                "/api/auth/verify",
+                                "/auth/users/password/reset",
+                                "/auth/users/password/reset/page",
+                                "/auth/users/password/reset/submit"
                         ).permitAll()
                         .anyRequest().authenticated()
                 );

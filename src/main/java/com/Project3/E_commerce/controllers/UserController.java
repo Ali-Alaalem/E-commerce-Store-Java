@@ -6,10 +6,7 @@ import com.Project3.E_commerce.models.request.LoginRequest;
 import com.Project3.E_commerce.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path="/auth/users")
@@ -32,5 +29,24 @@ private UserService userService;
         System.out.println("Calling loginUser ==>");
         return userService.loginUser(loginRequest);
 
+    }
+
+
+    @PostMapping("/password/reset")
+    public void resetPasswordEmailSender(@RequestBody User user){
+        System.out.println("Calling resetPasswordEmailSender ==>");
+        userService.resetPasswordEmailSender(user);
+    }
+
+    @GetMapping("/password/reset/page")
+    public ResponseEntity<String> resetPasswordPage(@RequestParam("token") String token){
+        System.out.println("Calling resetPasswordPage ==>");
+        return userService.resetPasswordPage(token);
+    }
+
+    @PostMapping("/password/reset/submit")
+    public ResponseEntity<String> resetPasswordSubmit(@RequestParam String token, @RequestParam String newPassword) {
+        userService.resetPassword(token, newPassword);
+        return ResponseEntity.ok("<h3>Password reset successfully!</h3>");
     }
 }
