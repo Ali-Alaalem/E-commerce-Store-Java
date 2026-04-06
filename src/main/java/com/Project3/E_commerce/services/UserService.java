@@ -69,9 +69,10 @@ public class UserService {
     public User createUser(User objectUser){
         if(!userRepository.existsByEmail(objectUser.getEmail())){
 objectUser.setPassword(passwordEncoder.encode(objectUser.getPassword()));
-            Optional<Role> role=roleRepository.findByName("Customer");
+            Optional<Role> role=roleRepository.findByName("CUSTOMER");
             objectUser.setRole(role.get());
             objectUser.setIsVerified(false);
+            objectUser.setIsDeleted(false);
             User user=userRepository.save(objectUser);
 
 
@@ -103,7 +104,7 @@ objectUser.setPassword(passwordEncoder.encode(objectUser.getPassword()));
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
             myUserDetails=(MyUserDetails) authentication.getPrincipal();
-            if(myUserDetails.getUser().getIsVerified()){
+            if(myUserDetails.getUser().getIsVerified() && myUserDetails.getUser().getIsDeleted() !=true){
             final String JWT =jwtUtils.generateJwtToken(myUserDetails);
             return ResponseEntity.ok(new LoginResponse(JWT));
             }else{
@@ -237,6 +238,18 @@ objectUser.setPassword(passwordEncoder.encode(objectUser.getPassword()));
             throw new InformationExistException("The Current password is wrong");
         }
 
+    }
+
+    public User softDeleteUser(Authentication authentication,Long userId){
+        System.out.println("Service calling ==> deleteUser()");
+        Optional<User> forginUser=userRepository.findById(userId);
+        String currentLoggedUserEmail = authentication.getName();
+        User userLoggedIn=userRepository.findUserByEmail(currentLoggedUserEmail);
+        if(!userLoggedIn.getRole().getName().equals("ADMIN") && forginUser.isPresent()){
+            throw new InformationExistException("User does not have permission or the user wanted to be deleted is not exist");
+        }
+        forginUser.get().setIsDeleted(true);
+        return userRepository.save(forginUser.get());
     }
 
 }

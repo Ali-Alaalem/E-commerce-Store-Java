@@ -7,6 +7,7 @@ import com.Project3.E_commerce.models.request.PasswordChangeRequest;
 import com.Project3.E_commerce.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,6 +57,13 @@ private UserService userService;
     public String ChangePassword(Authentication authentication, @RequestBody PasswordChangeRequest request){
         System.out.println("Controller calling ==> ChangePassword()");
         return userService.ChangePassword(authentication,request);
+    }
+
+    @PutMapping("/{userId}/user")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public User softDeleteUser(Authentication authentication,@PathVariable("userId") Long userId){
+        System.out.println("Controller calling ==> softDeleteUser()");
+        return userService.softDeleteUser(authentication,userId);
     }
 
 }

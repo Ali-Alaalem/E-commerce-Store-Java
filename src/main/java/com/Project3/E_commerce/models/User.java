@@ -26,8 +26,9 @@ public class User {
     private String email;
     private String password;
     private Boolean isVerified=false;
+    private Boolean isDeleted=false;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private Role role;
 

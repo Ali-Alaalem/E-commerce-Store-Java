@@ -3,20 +3,24 @@ package com.Project3.E_commerce.security;
 
 import com.Project3.E_commerce.models.User;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.List;
+
 
 public class MyUserDetails implements UserDetails {
     private User user;
     public MyUserDetails(User user) {
         this.user = user;
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new HashSet<>();
+            return List.of(new SimpleGrantedAuthority(user.getRole().getName().toUpperCase()));
     }
+
     @Override
     public String getPassword() {
         return user.getPassword();
@@ -44,4 +48,12 @@ public class MyUserDetails implements UserDetails {
     public User getUser() {
         return user;
     }
+
+    public String getRoleName() {
+        if (user.getRole() == null) {
+            throw new IllegalStateException("User must have a role");
+        }
+        return user.getRole().getName();
+    }
+
 }
