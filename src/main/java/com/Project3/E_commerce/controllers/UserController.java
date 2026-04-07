@@ -5,11 +5,16 @@ import com.Project3.E_commerce.models.User;
 import com.Project3.E_commerce.models.request.LoginRequest;
 import com.Project3.E_commerce.models.request.PasswordChangeRequest;
 import com.Project3.E_commerce.services.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping(path="/auth/users")
@@ -64,6 +69,16 @@ private UserService userService;
     public User softDeleteUser(Authentication authentication,@PathVariable("userId") Long userId){
         System.out.println("Controller calling ==> softDeleteUser()");
         return userService.softDeleteUser(authentication,userId);
+    }
+
+
+    @PostMapping(
+            value = "/imageUploader",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
+    @PreAuthorize("hasAuthority('CUSTOMER')")
+    public User ImageUploader(Authentication authentication,@RequestPart("image") MultipartFile image) throws IOException {
+        return userService.ImageUploader(authentication,image);
     }
 
 }

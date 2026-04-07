@@ -13,6 +13,7 @@ import com.Project3.E_commerce.repositorys.UserRepository;
 import com.Project3.E_commerce.repositorys.VerificationTokenRepository;
 import com.Project3.E_commerce.security.JWTUtils;
 import com.Project3.E_commerce.security.MyUserDetails;
+import com.cloudinary.Cloudinary;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
@@ -27,8 +28,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,6 +46,8 @@ public class UserService {
     private MyUserDetails myUserDetails;
     private RoleRepository roleRepository;
     private final JavaMailSender mailSender;
+    private final Cloudinary cloudinary;
+
 
 
     private TokenService tokenService;
@@ -49,7 +56,7 @@ public class UserService {
     private String senderEmail;
 
     public UserService(VerificationTokenRepository verificationTokenRepository, TokenService tokenService, RoleRepository roleRepository, UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder,
-                       JWTUtils jwtUtils, @Lazy AuthenticationManager authenticationManager, @Lazy MyUserDetails myUserDetails, JavaMailSender mailSender1, VerificationTokenRepository verificationTokenRepository1, JavaMailSender mailSender){
+                       JWTUtils jwtUtils, @Lazy AuthenticationManager authenticationManager, @Lazy MyUserDetails myUserDetails, JavaMailSender mailSender1, VerificationTokenRepository verificationTokenRepository1, JavaMailSender mailSender, Cloudinary cloudinary){
         this.userRepository=userRepository;
         this.passwordEncoder=passwordEncoder;
         this.jwtUtils=jwtUtils;
@@ -59,6 +66,7 @@ public class UserService {
         this.tokenService=tokenService;
         this.verificationTokenRepository=verificationTokenRepository;
         this.mailSender = mailSender;
+        this.cloudinary = cloudinary;
     }
 
 
@@ -248,8 +256,24 @@ objectUser.setPassword(passwordEncoder.encode(objectUser.getPassword()));
         if(!userLoggedIn.getRole().getName().equals("ADMIN") && forginUser.isPresent()){
             throw new InformationExistException("User does not have permission or the user wanted to be deleted is not exist");
         }
-        forginUser.get().setIsDeleted(true);
+
+        if(forginUser.get().getIsDeleted() ==true){
+            forginUser.get().setIsDeleted(false);
+        }else
+        {
+            forginUser.get().setIsDeleted(true);
+        }
+
         return userRepository.save(forginUser.get());
+    }
+
+    public User ImageUploader (Authentication authentication,MultipartFile multipartFile) throws IOException {
+        System.out.println("Service is calling createPerson");
+User user= userRepository.findUserByEmail(authentication.getName());
+        String imageURL= cloudinary.uploader().upload(multipartFile.getBytes(),
+                Map.of("public_id", UUID.randomUUID().toString())).get("url").toString();
+        user.setImage(imageURL);
+        return this.userRepository.save(user);
     }
 
 }
