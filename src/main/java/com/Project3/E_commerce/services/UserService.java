@@ -81,6 +81,7 @@ objectUser.setPassword(passwordEncoder.encode(objectUser.getPassword()));
             objectUser.setRole(role.get());
             objectUser.setIsVerified(false);
             objectUser.setIsDeleted(false);
+            objectUser.setImage("http://res.cloudinary.com/dqqmgoftf/image/upload/v1775576374/f4c86146-3fbb-49a2-83aa-be503a5721ce.png");
             User user=userRepository.save(objectUser);
 
 
@@ -267,7 +268,7 @@ objectUser.setPassword(passwordEncoder.encode(objectUser.getPassword()));
         return userRepository.save(forginUser.get());
     }
 
-    public User ImageUploader (Authentication authentication,MultipartFile multipartFile) throws IOException {
+    public User ImageUpdater (Authentication authentication,MultipartFile multipartFile) throws IOException {
         System.out.println("Service is calling createPerson");
 User user= userRepository.findUserByEmail(authentication.getName());
         String imageURL= cloudinary.uploader().upload(multipartFile.getBytes(),

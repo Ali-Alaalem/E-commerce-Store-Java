@@ -73,12 +73,12 @@ private UserService userService;
 
 
     @PostMapping(
-            value = "/imageUploader",
+            value = "/imageUpdater",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     @PreAuthorize("hasAuthority('CUSTOMER')")
-    public User ImageUploader(Authentication authentication,@RequestPart("image") MultipartFile image) throws IOException {
-        return userService.ImageUploader(authentication,image);
+    public User ImageUpdater(Authentication authentication,@RequestPart("image") MultipartFile image) throws IOException {
+        return userService.ImageUpdater(authentication,image);
     }
 
 }
