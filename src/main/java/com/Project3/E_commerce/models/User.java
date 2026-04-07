@@ -27,6 +27,7 @@ public class User {
     private String password;
     private Boolean isVerified=false;
     private Boolean isDeleted=false;
+    private String Image;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
