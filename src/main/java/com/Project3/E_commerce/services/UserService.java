@@ -2,6 +2,7 @@ package com.Project3.E_commerce.services;
 
 
 import com.Project3.E_commerce.exceptions.InformationExistException;
+import com.Project3.E_commerce.exceptions.InformationNotFoundException;
 import com.Project3.E_commerce.models.Role;
 import com.Project3.E_commerce.models.User;
 import com.Project3.E_commerce.models.VerificationToken;
@@ -99,6 +100,29 @@ objectUser.setPassword(passwordEncoder.encode(objectUser.getPassword()));
             return user;
         }else{
             throw new InformationExistException("User with email address " +objectUser.getEmail() + "already exist");
+        }
+    }
+
+
+    public User updateUser(Authentication authentication, User user){
+        System.out.println("Service calling ==> updateUser()");
+        Optional<User> userObject = Optional.ofNullable(this.userRepository.findUserByEmail(authentication.getName()));
+        if(userObject.isPresent()){
+            user.setId(userObject.get().getId());
+            return this.userRepository.save(user);
+        }else{
+            throw new InformationNotFoundException("An error happen during the update process");
+        }
+    }
+
+    public User deleteUser(Authentication authentication){
+        System.out.println("Service calling ==> deleteUser()");
+        Optional<User> user = Optional.ofNullable(this.userRepository.findUserByEmail(authentication.getName()));
+        if(user.isPresent()){
+            this.userRepository.delete(user.get());
+            return user.get();
+        }else{
+            throw new InformationNotFoundException("An error happen during the delete process");
         }
     }
 
