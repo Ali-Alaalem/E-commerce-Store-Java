@@ -81,4 +81,16 @@ private UserService userService;
         return userService.ImageUpdater(authentication,image);
     }
 
+    @PatchMapping("/UpdateUser")
+    public User updatePerson(Authentication authentication, @RequestBody User user){
+        System.out.println("Controller calling ==> updatePerson()");
+        return this.userService.updateUser(authentication,user);
+    }
+
+    @DeleteMapping("/DeleteUser")
+    public User deleteUser(Authentication authentication){
+        System.out.println("Controller calling ==> updatePerson()");
+        return this.userService.deleteUser(authentication);
+    }
+
 }

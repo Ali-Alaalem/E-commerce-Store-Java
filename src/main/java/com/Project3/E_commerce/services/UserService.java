@@ -104,15 +104,23 @@ objectUser.setPassword(passwordEncoder.encode(objectUser.getPassword()));
     }
 
 
-    public User updateUser(Authentication authentication, User user){
-        System.out.println("Service calling ==> updateUser()");
-        Optional<User> userObject = Optional.ofNullable(this.userRepository.findUserByEmail(authentication.getName()));
-        if(userObject.isPresent()){
-            user.setId(userObject.get().getId());
-            return this.userRepository.save(user);
-        }else{
-            throw new InformationNotFoundException("An error happen during the update process");
+    public User updateUser(Authentication authentication, User user) {
+
+        User existingUser = userRepository.findUserByEmail(authentication.getName());
+
+        if (user.getUsername() != null) {
+            existingUser.setUsername(user.getUsername());
         }
+
+        if (user.getEmail() != null) {
+            existingUser.setEmail(user.getEmail());
+        }
+
+        if (user.getImage() != null) {
+            existingUser.setImage(user.getImage());
+        }
+
+        return userRepository.save(existingUser);
     }
 
     public User deleteUser(Authentication authentication){
