@@ -1,6 +1,7 @@
 package com.Project3.E_commerce.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,9 +29,11 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<CartItem> cartItems;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<OrderItem> orderItems;
 }

@@ -1,11 +1,8 @@
 package com.Project3.E_commerce.controllers;
 
 import com.Project3.E_commerce.models.Category;
-import com.Project3.E_commerce.models.User;
 import com.Project3.E_commerce.services.CategoryService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
