@@ -184,8 +184,6 @@ objectUser.setPassword(passwordEncoder.encode(objectUser.getPassword()));
         String link = "http://localhost:8080/auth/users/password/reset/page?token=" + token;
 
         try{
-            //For my Collaborators I'm  using this (MimeMessage) to enable the Html in the email the user will receive to verify his email when he registered.
-            //but in normal scenarios (JavaMailSender) this is the library responsible for sending the email.
             MimeMessage message =mailSender.createMimeMessage();
             MimeMessageHelper helper=new MimeMessageHelper(message,true,"UTF-8");
 
