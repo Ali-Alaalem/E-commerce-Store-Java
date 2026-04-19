@@ -4,26 +4,40 @@ import com.Project3.E_commerce.exceptions.InformationNotFoundException;
 import com.Project3.E_commerce.models.Cart;
 import com.Project3.E_commerce.models.CartItem;
 import com.Project3.E_commerce.models.Product;
+import com.Project3.E_commerce.models.User;
 import com.Project3.E_commerce.repositorys.CartRepository;
 import com.Project3.E_commerce.repositorys.ProductRepository;
 import com.Project3.E_commerce.repositorys.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
 public class CartService {
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;
+    private final UserRepository userRepository;
 
 
-    public CartService(CartRepository cartRepository, ProductRepository productRepository, UserRepository userRepository) {
+    public CartService(CartRepository cartRepository, ProductRepository productRepository, UserRepository userRepository, UserRepository userRepository1) {
         this.cartRepository = cartRepository;
         this.productRepository = productRepository;
+        this.userRepository = userRepository1;
     }
 
     public Cart getCart(Long userId) {
-        return cartRepository.findByUserId(userId).orElseThrow(() -> new InformationNotFoundException("You don't have any Cart until now"));
+        return cartRepository.findByUserId(userId)
+                .orElseGet(() -> {
+                    User user = userRepository.findById(userId).orElseThrow(() -> new InformationNotFoundException("User not found"));
+                    Cart newCart = new Cart();
+                    newCart.setUser(user);
+                    newCart.setItems(new ArrayList<>());
+                    return cartRepository.save(newCart);
+                });
     }
 
     @Transactional
@@ -33,11 +47,26 @@ public class CartService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new InformationNotFoundException("Product not found"));
 
+        if (product.getStockQuantity() < quantity) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Sorry we don't have stock for " + product.getName() +
+                            " more than " + product.getStockQuantity()
+            );        }
+
+
         Optional<CartItem> existing = cart.getItems().stream()
                 .filter(i -> i.getProduct().getId().equals(productId)).findFirst();
 
         if (existing.isPresent()) {
             CartItem item = existing.get();
+            int newTotal = item.getQuantity() + quantity;
+            if (newTotal > product.getStockQuantity()) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Sorry we don't have stock for " + product.getName() +
+                                " more than " + product.getStockQuantity()
+                );            }
             item.setQuantity(item.getQuantity() + quantity);
             item.setSubtotal(item.getQuantity() * product.getPrice());
         } else {
