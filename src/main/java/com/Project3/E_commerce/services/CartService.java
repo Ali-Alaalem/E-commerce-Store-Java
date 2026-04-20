@@ -1,6 +1,7 @@
 package com.Project3.E_commerce.services;
 
 import com.Project3.E_commerce.exceptions.InformationNotFoundException;
+import com.Project3.E_commerce.exceptions.OutOfStockException;
 import com.Project3.E_commerce.models.Cart;
 import com.Project3.E_commerce.models.CartItem;
 import com.Project3.E_commerce.models.Product;
@@ -48,11 +49,10 @@ public class CartService {
                 .orElseThrow(() -> new InformationNotFoundException("Product not found"));
 
         if (product.getStockQuantity() < quantity) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    "Sorry we don't have stock for " + product.getName() +
-                            " more than " + product.getStockQuantity()
-            );        }
+            throw new OutOfStockException("Sorry we don't have stock for " + product.getName() +
+            " more than " + product.getStockQuantity()
+            );
+        }
 
 
         Optional<CartItem> existing = cart.getItems().stream()
@@ -62,11 +62,10 @@ public class CartService {
             CartItem item = existing.get();
             int newTotal = item.getQuantity() + quantity;
             if (newTotal > product.getStockQuantity()) {
-                throw new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST,
-                        "Sorry we don't have stock for " + product.getName() +
-                                " more than " + product.getStockQuantity()
-                );            }
+                throw new OutOfStockException("Sorry we don't have stock for " + product.getName() +
+                        " more than " + product.getStockQuantity()
+                );
+            }
             item.setQuantity(item.getQuantity() + quantity);
             item.setSubtotal(item.getQuantity() * product.getPrice());
         } else {

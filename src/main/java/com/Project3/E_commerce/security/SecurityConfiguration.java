@@ -17,11 +17,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration {
     private MyUserDetailsService myUserDetailsService;
-
+    private JwtRequestFilter jwtRequestFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Autowired
+    public void setJwtRequestFilter(JwtRequestFilter jwtRequestFilter) {
+        this.jwtRequestFilter = jwtRequestFilter;
     }
 
     @Bean
@@ -39,8 +44,8 @@ public class SecurityConfiguration {
                                 "/auth/users/password/reset/submit"
                         ).permitAll()
                         .anyRequest().authenticated()
-                );
-        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+                )
+        .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
@@ -55,11 +60,5 @@ public class SecurityConfiguration {
     @Autowired
     public void setMyUserDetailsService(MyUserDetailsService myUserDetailsService) {
         this.myUserDetailsService = myUserDetailsService;
-    }
-
-
-    @Bean
-    public JwtRequestFilter authenticationJwtTokenFilter(){
-        return new JwtRequestFilter();
     }
 }
