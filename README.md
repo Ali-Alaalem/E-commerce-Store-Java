@@ -82,7 +82,7 @@ Security was a done with A custom **JWT-based authentication** mechanism was imp
 
 ## Project Links
 
-- **User Stories**: [https://trello.com/b/dHZTYPVU/project-3](Link to trello)
+- **User Stories**: [https://trello.com/b/dHZTYPVU/project-3](#)
 - **ERD Diagram**: [https://trello.com/b/dHZTYPVU/project-3](#)
 - **Planning Documentation**: [https://github.com/Ali-Alaalem/E-commerce-Store-Java](#)  
 
