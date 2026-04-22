@@ -20,14 +20,14 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/auth/users/{{userId}}/user",
+              "raw": "{{baseUrl}}/auth/users/2/user",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "auth",
                 "users",
-                "{{userId}}",
+                "2",
                 "user"
               ]
             }
@@ -58,7 +58,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/categories/category/{{categoryId}}",
+              "raw": "{{baseUrl}}/api/categories/category/1",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -66,7 +66,7 @@
                 "api",
                 "categories",
                 "category",
-                "{{categoryId}}"
+                "1"
               ]
             }
           },
@@ -88,7 +88,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Electronics\"\n}"
+              "raw": "{\n  \"name\": \"test\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/api/categories/createCategory",
@@ -120,10 +120,10 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Updated Electronics\"\n}"
+              "raw": "{\n  \"name\": \"Updated test\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/categories/updateCategory/{{categoryId}}",
+              "raw": "{{baseUrl}}/api/categories/updateCategory/4",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -131,7 +131,7 @@
                 "api",
                 "categories",
                 "updateCategory",
-                "{{categoryId}}"
+                "4"
               ]
             }
           },
@@ -148,7 +148,7 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/categories/deleteCategory/{{categoryId}}",
+              "raw": "{{baseUrl}}/api/categories/deleteCategory/4",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -156,7 +156,7 @@
                 "api",
                 "categories",
                 "deleteCategory",
-                "{{categoryId}}"
+                "4"
               ]
             }
           },
@@ -186,7 +186,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/products/product/{{productId}}",
+              "raw": "{{baseUrl}}/api/products/product/1",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -194,7 +194,7 @@
                 "api",
                 "products",
                 "product",
-                "{{productId}}"
+                "1"
               ]
             }
           },
@@ -216,17 +216,18 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Gaming Laptop\",\n  \"description\": \"High performance laptop\",\n  \"price\": 999.99,\n  \"stockQuantity\": 10,\n  \"category\": { \"id\": 1 }\n}"
+              "raw": "{\n  \"name\": \"test\",\n  \"description\": \"testing\",\n  \"price\": 999.99,\n  \"stockQuantity\": 10\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/products/createProduct",
+              "raw": "{{baseUrl}}/api/products/createProduct/3",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "products",
-                "createProduct"
+                "createProduct",
+                "3"
               ]
             }
           },
@@ -248,10 +249,10 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Pro Gaming Laptop\",\n  \"price\": 1099.99,\n  \"stockQuantity\": 15\n}"
+              "raw": "{\n  \"name\": \"testing updated\",\n  \"price\": 1099.99,\n  \"stockQuantity\": 15\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/products/updateProduct/{{productId}}",
+              "raw": "{{baseUrl}}/api/products/updateProduct/7",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -259,7 +260,7 @@
                 "api",
                 "products",
                 "updateProduct",
-                "{{productId}}"
+                "7"
               ]
             }
           },
@@ -276,7 +277,7 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/products/deleteProduct/{{productId}}",
+              "raw": "{{baseUrl}}/api/products/deleteProduct/7",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -284,7 +285,7 @@
                 "api",
                 "products",
                 "deleteProduct",
-                "{{productId}}"
+                "7"
               ]
             }
           },
@@ -324,7 +325,7 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/orders/order/{{orderId}}",
+              "raw": "{{baseUrl}}/api/orders/order/1",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -332,7 +333,7 @@
                 "api",
                 "orders",
                 "order",
-                "{{orderId}}"
+                "1"
               ]
             }
           },
@@ -349,7 +350,7 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/orders/updateOrderStatus/{{orderId}}?status=SHIPPED",
+              "raw": "{{baseUrl}}/api/orders/updateOrderStatus/1 ?status=SHIPPED",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -357,7 +358,7 @@
                 "api",
                 "orders",
                 "updateOrderStatus",
-                "{{orderId}}"
+                "1 "
               ],
               "query": [
                 {
@@ -380,7 +381,7 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/orders/deleteOrder/{{orderId}}",
+              "raw": "{{baseUrl}}/api/orders/deleteOrder/1",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -388,7 +389,7 @@
                 "api",
                 "orders",
                 "deleteOrder",
-                "{{orderId}}"
+                "1"
               ]
             }
           },
@@ -433,7 +434,7 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/cart/addToCart?productId={{productId}}&quantity=2",
+              "raw": "{{baseUrl}}/api/cart/addToCart?productId= 1 &quantity=2",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -445,7 +446,7 @@
               "query": [
                 {
                   "key": "productId",
-                  "value": "{{productId}}"
+                  "value": " 1 "
                 },
                 {
                   "key": "quantity",
@@ -467,7 +468,7 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/cart/removeFromCart/{{productId}}",
+              "raw": "{{baseUrl}}/api/cart/removeFromCart/1",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -475,7 +476,7 @@
                 "api",
                 "cart",
                 "removeFromCart",
-                "{{productId}}"
+                "1"
               ]
             }
           },
@@ -549,7 +550,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"username\": \"Ali\",\n  \"email\": \"xxxxxxx@gmail.com\",\n  \"password\": \"123\"\n}",
+              "raw": "{\n  \"username\": \"Ali\",\n  \"email\": \"admin@gmail.com\",\n  \"password\": \"123\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -603,7 +604,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"xxxxxxx@gmail.com\",\n  \"password\": \"123\"\n}",
+              "raw": "{\n  \"email\": \"admin@gmail.com\",\n  \"password\": \"123\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -636,7 +637,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"currentPassword\": \"123456\",\n  \"newPassword\": \"newpass123\"\n}",
+              "raw": "{\n  \"currentPassword\": \"123\",\n  \"newPassword\": \"1234\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -673,7 +674,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"emailAddress\":\"xxxxxxx@gmail.com\"\n}",
+              "raw": "{\n  \"email\":\"xxxxxxx@gmail.com\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -698,9 +699,6 @@
         {
           "name": "Update User",
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
             "method": "PATCH",
             "header": [
               {
@@ -710,7 +708,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"username\": \"xxxxx\",\n  \"emailAddress\": \"xxxxxxx@gmail.com\"\n}",
+              "raw": "{\n  \"username\": \"Alooy\",\n  \"email\": \"xxxxxx@gmail.com\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -734,9 +732,6 @@
         {
           "name": "Delete Acc",
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
             "method": "DELETE",
             "header": [
               {
@@ -754,14 +749,14 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/auth/users/UpdateUser",
+              "raw": "{{baseUrl}}/auth/users/DeleteUser",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "auth",
                 "users",
-                "UpdateUser"
+                "DeleteUser"
               ]
             }
           },
@@ -784,7 +779,7 @@
                   "key": "image",
                   "type": "file",
                   "uuid": "4eebb277-9dc7-47f0-a5dd-7f968efcdc99",
-                  "src": "/C:/Users/meemo/Desktop/icon-7797704_640.png"
+                  "src": "/C:/Users/meemo/OneDrive/Desktop/download.jpg"
                 }
               ]
             },
@@ -810,7 +805,7 @@
     "bearer": [
       {
         "key": "token",
-        "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZWVtbzIwMDJhQGdtYWlsLmNvbSIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc3NjY5Mzk0NywiZXhwIjoxNzc2NzgwMzQ3fQ.2R60bUbLGVDaoUd1fWCaRQil8IqjJKlxgrMKePbfADk",
+        "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NzY4Njg2NTIsImV4cCI6MTc3Njk1NTA1Mn0.X1gx8g9PAnRLjYCA2CJNmRgC-IvmNZS7SMYL63PPptI",
         "type": "string"
       }
     ]
